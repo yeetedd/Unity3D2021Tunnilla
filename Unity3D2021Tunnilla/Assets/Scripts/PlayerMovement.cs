@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
 
+    GameObject camera;
+
     public float speed = 8f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
@@ -31,5 +33,32 @@ public class PlayerMovement : MonoBehaviour
     {
         int layerMask = 1 << 8;
 
+        RaycastHit hit;
+
+        if(Physics.Raycast(groundCheck.position, groundCheck.TransformDirection(Vector3.down), out hit, raycastDistance, layerMask))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
     }
+
+    private void Update()
+    {
+        //putoaminen
+        if(isGrounded  && velocity.y < 0)
+        {
+            velocity.y = -2;
+        }
+
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        move = camera.transform.right * x + camera.transform.forward * z;
+    }
+
+
 }
