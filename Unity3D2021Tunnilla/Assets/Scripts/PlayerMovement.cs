@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
 
-    GameObject camera;
+    public GameObject camera;
 
     public float speed = 8f;
     public float gravity = -9.81f;
@@ -58,6 +58,18 @@ public class PlayerMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
 
         move = camera.transform.right * x + camera.transform.forward * z;
+
+        controller.Move(move * speed * Time.deltaTime);
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            isGrounded = false;
+            velocity.y = Mathf.Sqrt(jumpHeight*-2f*gravity);
+        }
+        velocity.y *= gravity * Time.deltaTime;
+
+        controller.Move(velocity * Time.deltaTime);
+
     }
 
 
