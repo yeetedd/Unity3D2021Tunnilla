@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 8f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
-    private float raycastDistance = 1f;
+    float raycastDistance = 1f;    //private was taken away
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
             velocity.y = Mathf.Sqrt(jumpHeight*-2f*gravity);
         }
-        velocity.y *= gravity * Time.deltaTime;
+        velocity.y += gravity * Time.deltaTime;  //vaihda kertomerkki plussaksi
 
         controller.Move(velocity * Time.deltaTime);
 
