@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using NUnit.Framework.Interfaces;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject camera;
 
     public float speed = 8f;
+    public float runSpeed = 1.8f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
     float raycastDistance = 1f;    //private was taken away
@@ -22,11 +25,6 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 move;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     private void FixedUpdate()
@@ -59,7 +57,16 @@ public class PlayerMovement : MonoBehaviour
 
         move = camera.transform.right * x + camera.transform.forward * z;
 
-        controller.Move(move * speed * Time.deltaTime);
+        //controller.Move(move * speed * Time.deltaTime);
+        if (Input.GetButton("Run"))
+        {
+            controller.Move(move * speed * runSpeed * Time.deltaTime);
+        }
+        else
+        {
+            controller.Move(move * speed * Time.deltaTime);
+        }
+
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
